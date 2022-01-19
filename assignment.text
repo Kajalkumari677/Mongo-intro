@@ -1,0 +1,209 @@
+> show dbs
+admin       0.000GB
+assignment  0.000GB
+config      0.000GB
+eval        0.000GB
+local       0.000GB
+test        0.000GB
+> use assignment
+switched to db assignment
+> db.users.find()
+
+//insert
+
+>db.users.insert({firstname:"kajal",lastname:"kumari",email:"677kajal@gmail.com",gender:"female",ip_address:"1223457899",age:"22"})  
+
+output
+WriteResult({ "nInserted" : 1 })
+
+
+//insertMany
+
+>db.users.insertMany([{firstname:"kk",lastname:"suman",email:"sum65@gmail.com",gender:"male",ip_address:"12234009899",age:"25"},{firstname:"keshav",lastname:"ranjan",email:"kishu@gmail.com",gender:"male",ip_address:"1223457899",age:"30"},{firstname:"ridhima",lastname:"mishra",email:"ridhu5@gmail.com",gender:"female",ip_address:"12234009899",age:"23"}]);
+
+output
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 3,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+> db.users.find().pretty()
+
+output
+{
+        "_id" : ObjectId("61d6dcf23ce3d7d2bc298139"),
+        "firstname" : "kajal",
+        "lastname" : "kumari",
+        "email" : "677kajal@gmail.com",
+        "gender" : "female",
+        "ip_address" : "1223457899",
+        "age" : "22"
+}
+{
+        "_id" : ObjectId("61d6dd563ce3d7d2bc29813b"),
+        "firstname" : "kk",
+        "lastname" : "suman",
+        "email" : "sum65@gmail.com",
+        "gender" : "male",
+        "ip_address" : "12234009899",
+        "age" : "25"
+}
+{
+        "_id" : ObjectId("61d6e0da3ce3d7d2bc29813c"),
+        "firstname" : "keshav",
+        "lastname" : "ranjan",
+        "email" : "kishu@gmail.com",
+        "gender" : "male",
+        "ip_address" : "1223457899",
+        "age" : "30"
+}
+{
+        "_id" : ObjectId("61d6e0da3ce3d7d2bc29813d"),
+        "firstname" : "ridhima",
+        "lastname" : "mishra",
+        "email" : "ridhu5@gmail.com",
+        "gender" : "female",
+        "ip_address" : "12234009899",
+        "age" : "23"
+}
+
+//findOne
+> db.users.findOne({"_id" : ObjectId("61d6e0da3ce3d7d2bc29813d")}); 
+
+output        
+{
+        "_id" : ObjectId("61d6e0da3ce3d7d2bc29813d"),
+        "firstname" : "ridhima",
+        "lastname" : "mishra",
+        "email" : "ridhu5@gmail.com",
+        "gender" : "female",
+        "ip_address" : "12234009899",
+        "age" : "23"
+}
+
+
+//update
+
+> db.users.update({"_id" : ObjectId("61d6e0da3ce3d7d2bc29813d")},{$set:{lastname:"pathak"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.users.findOne({"_id" : ObjectId("61d6e0da3ce3d7d2bc29813d")});
+{
+        "_id" : ObjectId("61d6e0da3ce3d7d2bc29813d"),
+        "firstname" : "ridhima",
+        "lastname" : "pathak",
+        "email" : "ridhu5@gmail.com",
+        "gender" : "female",
+        "ip_address" : "12234009899",
+        "age" : "23"
+}
+
+//updateMany
+
+db.users.updateMany({gender:"male"},{$set:{gender:"M"}});
+
+output
+{ "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
+
+> db.users.find().pretty()                                 
+{
+        "_id" : ObjectId("61d6dcf23ce3d7d2bc298139"),
+        "firstname" : "kajal",
+        "lastname" : "kumari",
+        "email" : "677kajal@gmail.com",
+        "gender" : "female",
+        "ip_address" : "1223457899",
+        "age" : "22"
+}
+{
+        "_id" : ObjectId("61d6dd563ce3d7d2bc29813b"),
+        "firstname" : "kk",
+        "lastname" : "suman",
+        "email" : "sum65@gmail.com",
+        "gender" : "M",
+        "ip_address" : "12234009899",
+        "age" : "25"
+}
+{
+        "_id" : ObjectId("61d6e0da3ce3d7d2bc29813c"),
+        "firstname" : "keshav",
+        "lastname" : "ranjan",
+        "email" : "kishu@gmail.com",
+        "gender" : "M",
+        "ip_address" : "1223457899",
+        "age" : "30"
+}
+{
+        "_id" : ObjectId("61d6e0da3ce3d7d2bc29813d"),
+        "firstname" : "ridhima",
+        "lastname" : "pathak",
+        "email" : "ridhu5@gmail.com",
+        "gender" : "F",
+        "ip_address" : "12234009899",
+        "age" : "23"
+}
+>
+
+//remove
+
+ db.users.remove({"_id" : ObjectId("61d6e0da3ce3d7d2bc29813d")});
+ output
+
+ WriteResult({ "nRemoved" : 1 })
+> db.users.find().pretty()
+{
+        "_id" : ObjectId("61d6dcf23ce3d7d2bc298139"),
+        "firstname" : "kajal",
+        "lastname" : "kumari",
+        "email" : "677kajal@gmail.com",
+        "gender" : "female",
+        "ip_address" : "1223457899",
+        "age" : "22"
+}
+{
+        "_id" : ObjectId("61d6dd563ce3d7d2bc29813b"),
+        "firstname" : "kk",
+        "lastname" : "suman",
+        "email" : "sum65@gmail.com",
+        "gender" : "M",
+        "ip_address" : "12234009899",
+        "age" : "25"
+}
+{
+        "_id" : ObjectId("61d6e0da3ce3d7d2bc29813c"),
+        "firstname" : "keshav",
+        "lastname" : "ranjan",
+        "email" : "kishu@gmail.com",
+        "gender" : "M",
+        "ip_address" : "1223457899",
+        "age" : "30"
+}
+
+//deleteMany
+
+> db.users.deleteMany({gender:"M"});  
+
+output                                                         
+{ "acknowledged" : true, "deletedCount" : 2 }
+> db.users.find().pretty()
+{
+        "_id" : ObjectId("61d6dcf23ce3d7d2bc298139"),
+        "firstname" : "kajal",
+        "lastname" : "kumari",
+        "email" : "677kajal@gmail.com",
+        "gender" : "female",
+        "ip_address" : "1223457899",
+        "age" : "22"
+}
+
+//delete databases
+
+db.dropDatabase();
+{ "ok" : 1 }
+> db.users.find().pretty()
+>
